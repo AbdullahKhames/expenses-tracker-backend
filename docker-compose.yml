@@ -1,0 +1,88 @@
+services:
+
+  # ==================== PostgreSQL ====================
+  postgres:
+    image: postgres:16-alpine
+    container_name: expenses-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: expenses
+      POSTGRES_USER: expenses_user
+      POSTGRES_PASSWORD: expenses_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U expenses_user -d expenses"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================== Redis ====================
+  redis:
+    image: redis:7-alpine
+    container_name: expenses-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ==================== Expenses Tracker App ====================
+  app:
+    image: abdullahkhames/expesnses-tracker-backend:s01
+    container_name: expenses-app
+    restart: unless-stopped
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      # Database
+      DB_URL: jdbc:postgresql://postgres:5432/expenses
+      DB_USERNAME: expenses_user
+      DB_PASSWORD: expenses_pass
+      DB_POOL_SIZE: 20
+      DB_MIN_IDLE: 5
+
+      # Redis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
+
+      # JPA
+      JPA_DDL_AUTO: update
+      JPA_SHOW_SQL: "false"
+
+      # Server
+      SERVER_PORT: 8080
+
+      # JWT — generate a real secret for production
+      JWT_SECRET_KEY: bXktc3VwZXItc2VjcmV0LWtleS1mb3ItZXhwZW5zZXMtdHJhY2tlci0yNTZiaXQ=
+      JWT_ACCESS_EXPIRATION: 86400000
+      JWT_REFRESH_EXPIRATION: 604800000
+
+      # Cache TTLs (seconds)
+      CACHE_DEFAULT_TTL: 300
+      CACHE_ACCOUNTS_TTL: 300
+      CACHE_CATEGORIES_TTL: 600
+      CACHE_BUDGETS_TTL: 120
+
+      # JVM
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx512m"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:

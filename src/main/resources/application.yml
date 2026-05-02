@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: expenses-tracker
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/expenses}
+    username: ${DB_USERNAME:expenses_user}
+    password: ${DB_PASSWORD:expenses_pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:20}
+      minimum-idle: ${DB_MIN_IDLE:5}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: ${REDIS_TIMEOUT:2000}
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    default-property-inclusion: non_null
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /expenses-tracker
+
+app:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY:dGVzdC1zZWNyZXQta2V5LWZvci10ZXN0aW5nLXB1cnBvc2VzLW9ubHktMjU2Yml0}
+      access-token-expiration: ${JWT_ACCESS_EXPIRATION:86400000}
+      refresh-token-expiration: ${JWT_REFRESH_EXPIRATION:604800000}
+    device-id-header: Device-ID
+    whitelist:
+      - path: /api/users/register
+        method: POST
+      - path: /api/users/login
+        method: POST
+      - path: /api/users/refreshToken
+        method: POST
+      - path: /api/users/resetAccount
+        method: POST
+      - path: /api/users/changeEmail
+        method: PUT
+      - path: /api/users/validateChangeEmail
+        method: PUT
+      - path: /api/users/activate/**
+        method: PUT
+      - path: /api/customers
+        method: POST
+      - path: /api/otp/**
+        method: "*"
+
+  cache:
+    default-ttl: ${CACHE_DEFAULT_TTL:300}
+    entity-ttls:
+      accounts: ${CACHE_ACCOUNTS_TTL:300}
+      categories: ${CACHE_CATEGORIES_TTL:600}
+      budgets: ${CACHE_BUDGETS_TTL:120}

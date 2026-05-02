@@ -1,0 +1,3318 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+		"name": "Expenses Tracker API",
+		"description": "Complete API collection for the Expenses Tracker application. Covers all endpoints across Auth, Users, Accounts, Budgets, Categories, Sub-Categories, Expenses, Transactions, Budget Transfers, Customers, and Associations controllers.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/expenses-tracker",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refreshToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "deviceId",
+			"value": "device-001",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "accountRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "accountName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "budgetRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "budgetRefNo2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "budgetName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "categoryRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "categoryName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "subCategoryRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "subCategoryName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "expenseRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "expenseName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "transactionRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "budgetTransferRefNo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customerRefNo",
+			"value": "",
+			"type": "string"
+		}
+	],
+
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"if(data.data && data.data.accessToken) {",
+									"    pm.collectionVariables.set(\"accessToken\", data.data.accessToken);",
+									"    pm.collectionVariables.set(\"refreshToken\", data.data.refreshToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"fullName\": \"John Doe\",\n\t\"email\": \"john@example.com\",\n\t\"password\": \"password123\",\n\t\"age\": 30,\n\t\"deviceId\": \"device-001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "register"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json();",
+									"if(data.data && data.data.accessToken) {",
+									"    pm.collectionVariables.set(\"accessToken\", data.data.accessToken);",
+									"    pm.collectionVariables.set(\"refreshToken\", data.data.refreshToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"john@example.com\",\n\t\"password\": \"password123\",\n\t\"deviceId\": \"device-001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "login"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"token\": \"{{accessToken}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/refreshToken",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "refreshToken"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Account",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"john@example.com\",\n\t\"password\": \"newpassword123\",\n\t\"deviceId\": \"device-001\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/resetAccount",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "resetAccount"]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints — no auth token required."
+		},
+
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get User by Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{email}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{email}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/getById/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "getById", "{{userId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/getByRef/{{userRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "getByRef", "{{userRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/all",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "all"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"john@example.com\",\n\t\"roleName\": \"ROLE_ADMIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/addRole",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "addRole"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/activate/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "activate", "{{userId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/deactivate/{{userId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "deactivate", "{{userId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/{{userRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "{{userRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/logout/{{userRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "logout", "{{userRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/logout",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "logout"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Change Email",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"refNo\": \"{{userRefNo}}\",\n\t\"token\": \"change-token\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/validateChangeEmail",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "validateChangeEmail"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Email",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"refNo\": \"{{userRefNo}}\",\n\t\"token\": \"change-token\",\n\t\"newEmail\": \"newemail@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/changeEmail",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "changeEmail"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Test",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/auth",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "users", "auth"]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "User management endpoints — requires authentication."
+		},
+
+		{
+			"name": "Accounts",
+			"item": [
+				{
+					"name": "Create Account",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Savings Account\",\n\t\"details\": \"Primary savings\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/refNo/{{accountRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "refNo", "{{accountRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/name/{{accountName}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "name", "{{accountName}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account Budgets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/{{accountRefNo}}/budgets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "{{accountRefNo}}", "budgets"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Account",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Account\",\n\t\"details\": \"Updated details\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/{{accountRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "{{accountRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Account",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/{{accountRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "{{accountRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts?page=1&per_page=10&sortBy=id&sortDirection=ASC",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "id"
+								},
+								{
+									"key": "sortDirection",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Budget Association",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/addAssociation/{{accountRefNo}}/{{budgetRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "addAssociation", "{{accountRefNo}}", "{{budgetRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Budget Association",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/accounts/removeAssociation/{{accountRefNo}}/{{budgetRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "accounts", "removeAssociation", "{{accountRefNo}}", "{{budgetRefNo}}"]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Account management endpoints."
+		},
+
+		{
+			"name": "Budgets",
+			"item": [
+				{
+					"name": "Create Budget",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Entertainment Budget\",\n\t\"details\": \"Monthly entertainment\",\n\t\"amount\": 500.0,\n\t\"budgetType\": \"ENTERTAINMENT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Budget by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets/refNo/{{budgetRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets", "refNo", "{{budgetRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Budget by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets/name/{{budgetName}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets", "name", "{{budgetName}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Budget",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Budget\",\n\t\"amount\": 600.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets/{{budgetRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets", "{{budgetRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Budget",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets/{{budgetRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets", "{{budgetRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Budgets",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets?page=1&per_page=10&sortBy=id&sortDirection=ASC",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "id"
+								},
+								{
+									"key": "sortDirection",
+									"value": "ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Budgets Without Account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budgets/noAccount?page=1&per_page=10&sortBy=id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budgets", "noAccount"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Budget management endpoints."
+		},
+
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Food\",\n\t\"details\": \"Food expenses\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/refNo/{{categoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "refNo", "{{categoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/name/{{categoryName}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "name", "{{categoryName}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Category\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/{{categoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "{{categoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SubCategories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/{{categoryRefNo}}/subCategories?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "{{categoryRefNo}}", "subCategories"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add SubCategory Association",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/addAssociation/{{categoryRefNo}}/{{subCategoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "addAssociation", "{{categoryRefNo}}", "{{subCategoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove SubCategory Association",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/removeAssociation/{{categoryRefNo}}/{{subCategoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "removeAssociation", "{{categoryRefNo}}", "{{subCategoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/{{categoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories", "{{categoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/categories?page=1&per_page=10&sortBy=id",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "categories"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								},
+								{
+									"key": "sortBy",
+									"value": "id"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Category management endpoints."
+		},
+
+		{
+			"name": "Sub-Categories",
+			"item": [
+				{
+					"name": "Create SubCategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Groceries\",\n\t\"details\": \"Grocery shopping\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SubCategory by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories/refNo/{{subCategoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories", "refNo", "{{subCategoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SubCategory by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories/name/{{subCategoryName}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories", "name", "{{subCategoryName}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SubCategory Expenses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories/{{subCategoryRefNo}}/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories", "{{subCategoryRefNo}}", "expenses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update SubCategory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated SubCategory\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories/{{subCategoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories", "{{subCategoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SubCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories/{{subCategoryRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories", "{{subCategoryRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All SubCategories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List SubCategories Without Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/sub-categories/noCategory?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "sub-categories", "noCategory"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Sub-Category management endpoints."
+		},
+
+		{
+			"name": "Expenses",
+			"item": [
+				{
+					"name": "Create Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Lunch\",\n\t\"details\": \"Team lunch\",\n\t\"amount\": 45.50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Expense by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/refNo/{{expenseRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "refNo", "{{expenseRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Expense by Name",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/name/{{expenseName}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "name", "{{expenseName}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Expense",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Expense\",\n\t\"amount\": 50.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/{{expenseRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "{{expenseRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Expense",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/{{expenseRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "{{expenseRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Expenses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Expenses Without SubCategory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/expenses/noSubCategory?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "expenses", "noSubCategory"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Expense management endpoints."
+		},
+
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Create Transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Grocery Purchase\",\n\t\"details\": \"Weekly groceries\",\n\t\"budgetAmounts\": [\n\t\t{\n\t\t\t\"budgetRefNo\": \"{{budgetRefNo}}\",\n\t\t\t\"amount\": 75.0,\n\t\t\t\"amountType\": \"DEBIT\"\n\t\t}\n\t],\n\t\"expense\": {\n\t\t\"name\": \"Groceries\",\n\t\t\"details\": \"Weekly grocery shopping\",\n\t\t\"amount\": 75.0\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/transactions",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "transactions"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/transactions/{{transactionRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "transactions", "{{transactionRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaction",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Transaction\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/transactions/{{transactionRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "transactions", "{{transactionRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Transaction",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/transactions/{{transactionRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "transactions", "{{transactionRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Transactions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/transactions?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "transactions"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Transaction management endpoints."
+		},
+
+		{
+			"name": "Budget Transfers",
+			"item": [
+				{
+					"name": "Create Budget Transfer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Monthly Transfer\",\n\t\"details\": \"Transfer to savings\",\n\t\"amount\": 200.0,\n\t\"lending\": false,\n\t\"senderBudgetAmount\": {\n\t\t\"budgetRefNo\": \"{{budgetRefNo}}\",\n\t\t\"amount\": 200.0,\n\t\t\"amountType\": \"DEBIT\"\n\t},\n\t\"receiverBudgetAmounts\": [\n\t\t{\n\t\t\t\"budgetRefNo\": \"{{budgetRefNo2}}\",\n\t\t\t\"amount\": 200.0,\n\t\t\t\"amountType\": \"CREDIT\"\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/budget-transfers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budget-transfers"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Budget Transfer by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budget-transfers/{{budgetTransferRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budget-transfers", "{{budgetTransferRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Budget Transfer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Transfer\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/budget-transfers/{{budgetTransferRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budget-transfers", "{{budgetTransferRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Budget Transfer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budget-transfers/{{budgetTransferRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budget-transfers", "{{budgetTransferRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Budget Transfers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/budget-transfers?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "budget-transfers"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Budget Transfer management endpoints."
+		},
+
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "customers"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer by RefNo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "customers", "{{customerRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "customers", "{{customerRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerRefNo}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "customers", "{{customerRefNo}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customers?page=1&per_page=10",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "customers"],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+
+				{
+					"name": "Customer Data",
+					"item": [
+						{
+							"name": "My Accounts",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/accounts?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "accounts"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Account Budgets",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/accounts/{{accountRefNo}}/budgets?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "accounts", "{{accountRefNo}}", "budgets"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Categories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/categories?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "categories"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Category SubCategories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/categories/{{categoryRefNo}}/sub-categories?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "categories", "{{categoryRefNo}}", "sub-categories"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My SubCategories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/sub-categories?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "sub-categories"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "SubCategory Expenses",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/sub-categories/{{subCategoryRefNo}}/expenses?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "sub-categories", "{{subCategoryRefNo}}", "expenses"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Budgets",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/budgets?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "budgets"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Expenses",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/expenses?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "expenses"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Transactions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/transactions?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "transactions"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "My Budget Transfers",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/budget-transfers?page=1&per_page=10",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "budget-transfers"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Accounts",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/get-accounts",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "get-accounts"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Categories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/get-categories",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "get-categories"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get SubCategories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/get-sub-categories",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "get-sub-categories"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Budgets",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/get-budgets",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "get-budgets"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Expenses",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/get-expenses",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "get-expenses"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Transactions",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/get-transactions",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "get-transactions"]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Customer-scoped data listing and association retrieval endpoints."
+				},
+
+				{
+					"name": "Customer Associations",
+					"item": [
+						{
+							"name": "Add Accounts",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{accountRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-accounts",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-accounts"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Accounts",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{accountRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/remove-accounts",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "remove-accounts"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Categories",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{categoryRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-categories",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-categories"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Categories",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{categoryRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/remove-categories",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "remove-categories"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add SubCategories",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{subCategoryRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-sub-categories",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-sub-categories"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove SubCategories",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{subCategoryRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/remove-sub-categories",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "remove-sub-categories"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Expenses",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{expenseRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-expenses",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-expenses"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Expenses",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{expenseRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/remove-expenses",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "remove-expenses"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Budgets",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{budgetRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-budgets",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-budgets"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove Budgets",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"associationRefNos\": [\"{{budgetRefNo}}\"]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/remove-budgets",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "remove-budgets"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Expenses DTOs",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"name\": \"New Expense\",\n\t\t\"details\": \"Created via DTO\",\n\t\t\"amount\": 25.0\n\t}\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-expenses-dtos",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-expenses-dtos"]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Budgets DTOs",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Device-ID",
+										"value": "{{deviceId}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n\t{\n\t\t\"name\": \"New Budget\",\n\t\t\"details\": \"Created via DTO\",\n\t\t\"amount\": 1000.0,\n\t\t\"budgetType\": \"SAVINGS\"\n\t}\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customers/add-budgets-dtos",
+									"host": ["{{baseUrl}}"],
+									"path": ["api", "customers", "add-budgets-dtos"]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Customer association management endpoints for adding/removing linked entities."
+				}
+			],
+			"description": "Customer management endpoints with data listing and association subfolders."
+		},
+
+		{
+			"name": "Associations",
+			"item": [
+				{
+					"name": "Customer Add Accounts",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{accountRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-accounts",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-accounts"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Remove Accounts",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{accountRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/remove-accounts",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "remove-accounts"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add Categories",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{categoryRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Remove Categories",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{categoryRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/remove-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "remove-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add SubCategories",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{subCategoryRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-sub-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-sub-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Remove SubCategories",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{subCategoryRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/remove-sub-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "remove-sub-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add Expenses",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{expenseRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-expenses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add Expenses DTOs",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"Expense via Assoc\",\n\t\t\"details\": \"test\",\n\t\t\"amount\": 10.0\n\t}\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-expenses-dtos",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-expenses-dtos"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Remove Expenses",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{expenseRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/remove-expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "remove-expenses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add Budgets",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{budgetRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-budgets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-budgets"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Add Budgets DTOs",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"Budget via Assoc\",\n\t\t\"amount\": 500.0,\n\t\t\"budgetType\": \"MISC\"\n\t}\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/add-budgets-dtos",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "add-budgets-dtos"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer Remove Budgets",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{budgetRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/customers/{{customerRefNo}}/remove-budgets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "customers", "{{customerRefNo}}", "remove-budgets"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Add Budgets",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{budgetRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/accounts/{{accountRefNo}}/add-budgets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "accounts", "{{accountRefNo}}", "add-budgets"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Remove Budgets",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{budgetRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/accounts/{{accountRefNo}}/remove-budgets",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "accounts", "{{accountRefNo}}", "remove-budgets"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Add SubCategories",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{subCategoryRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/categories/{{categoryRefNo}}/add-sub-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "categories", "{{categoryRefNo}}", "add-sub-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Category Remove SubCategories",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{subCategoryRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/categories/{{categoryRefNo}}/remove-sub-categories",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "categories", "{{categoryRefNo}}", "remove-sub-categories"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubCategory Add Expenses",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{expenseRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/sub-categories/{{subCategoryRefNo}}/add-expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "sub-categories", "{{subCategoryRefNo}}", "add-expenses"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SubCategory Remove Expenses",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Device-ID",
+								"value": "{{deviceId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"associationRefNos\": [\"{{expenseRefNo}}\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/association/sub-categories/{{subCategoryRefNo}}/remove-expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "association", "sub-categories", "{{subCategoryRefNo}}", "remove-expenses"]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Dedicated AssociationController endpoints for managing entity relationships by reference number."
+		}
+	]
+}

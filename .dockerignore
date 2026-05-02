@@ -1,0 +1,11 @@
+.git
+.gitignore
+.kiro
+.idea
+*.iml
+target
+docker-compose.yml
+Dockerfile
+.dockerignore
+README.md
+api_error.csv

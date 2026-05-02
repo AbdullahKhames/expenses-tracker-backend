@@ -1,0 +1,55 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:16:///expenses_test
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: "yyyy-MM-dd HH:mm:ss"
+    default-property-inclusion: non_null
+
+server:
+  port: 0
+  servlet:
+    context-path: /expenses-tracker
+
+app:
+  security:
+    jwt:
+      secret-key: dGVzdC1zZWNyZXQta2V5LWZvci10ZXN0aW5nLXB1cnBvc2VzLW9ubHktMjU2Yml0
+      access-token-expiration: 86400000
+      refresh-token-expiration: 604800000
+    device-id-header: Device-ID
+    whitelist:
+      - path: /api/users/register
+        method: POST
+      - path: /api/users/login
+        method: POST
+      - path: /api/users/refreshToken
+        method: POST
+      - path: /api/users/resetAccount
+        method: POST
+      - path: /api/users/changeEmail
+        method: PUT
+      - path: /api/users/validateChangeEmail
+        method: PUT
+      - path: /api/users/activate/**
+        method: PUT
+      - path: /api/customers
+        method: POST
+      - path: /api/otp/**
+        method: "*"
+  cache:
+    default-ttl: 60
+    entity-ttls:
+      accounts: 60
+      categories: 60
+      budgets: 60
