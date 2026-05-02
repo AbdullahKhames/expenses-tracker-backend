@@ -193,7 +193,7 @@ public class CustomerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/budget-transfers")
+    @GetMapping("/get-budget-transfers")
     public ResponseEntity<ResponseDto> getBudgetTransfers() {
         log.info("Getting customer transactions association");
         ResponseDto response = customerService.getCustomerAssociation(EntityType.BUDGET_TRANSFER);
